@@ -13,7 +13,6 @@ app.use("/auth", userRouter);
 
 
 const gameRouter = require("./routes/Game");
-const { application } = require("express");
 app.use("/games", gameRouter);
 
 

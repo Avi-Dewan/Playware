@@ -5,6 +5,19 @@ const { sign } = require("jsonwebtoken");
 
 const router = express.Router();
 
+router.get("/", (req, res)=> {
+  db.query(
+      "SELECT * FROM users",
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result);
+        }
+      }
+    );
+});
+
 router.post("/", (req, res) => {
     const {name, email, password, gamer_tag} = req.body;
 
