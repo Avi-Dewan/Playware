@@ -7,11 +7,16 @@ app.use(express.json());
 
 
 
-
+// Routers 
 const userRouter = require("./routes/User");
 app.use("/auth", userRouter);
 
 
+const gameRouter = require("./routes/Game");
+const { application } = require("express");
+app.use("/games", gameRouter);
+
+
 app.listen(3001, () => {
-console.log("Yey, your server is running on port 3001");
+    console.log("Yey, your server is running on port 3001");
 });
