@@ -9,6 +9,8 @@ import Login from './components/pages/Login';
 import NavBar from './components/pages/NavBar';
 import Register from './components/pages/Register';
 
+import './App.css';
+
 function App() {
    return (
 
