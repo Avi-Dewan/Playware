@@ -27,10 +27,10 @@ router.post("/", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    const { name, password } = req.body;
+    const { email, password } = req.body;
 
     db.query(
-        `SELECT * FROM users WHERE name = ?`, name,
+        `SELECT * FROM users WHERE email = ?`, email,
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -54,7 +54,7 @@ router.post("/login", (req, res) => {
             
               
                   const accessToken = sign(
-                    { name: user.name, id: user.id },
+                    { email: user.email, id: user.id },
                     "importantsecret"
                   );
               
