@@ -5,14 +5,25 @@ const Home = () => {
     return (
 
         <div className="container">
-            <div className="py-4">
-                <h1>Home Pages</h1>
 
+                <br></br>
+                <hr></hr>
+                <br></br>
 
+                <h1 > <i> Welcome to PlayWare  </i> </h1>
 
-            </div>
+                <br></br>
+                <br></br>
 
+                <img src = {require("./../../upload/icon.png")}alt="/" width></img>
 
+                <br></br>
+                <br></br>
+                <br></br>
+
+                <h5> <i> here we play games, make games  </i></h5>
+                
+                
 
 
 

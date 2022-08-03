@@ -1,5 +1,6 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
+import AddGame from './AddGame';
 
 const Admin = () => {
 
@@ -12,6 +13,17 @@ const Admin = () => {
     }, []);
 
 
+    const deleteUser = (id) => {
+        Axios.delete(`http://localhost:3001/auth/${id}`).then((response) => {
+          setUserList(
+            userList.filter((val) => {
+              return val.id !== id; // the true one will be filtered out
+            })
+          );
+        });
+    };
+
+
 
     return (
         <div className="container">
@@ -20,6 +32,16 @@ const Admin = () => {
                 <br></br>
                 <hr></hr>
                 <br></br>
+                
+                <h2> Add a new game: </h2>
+                <br></br>
+                
+                <AddGame />
+
+                <br></br>
+                <hr></hr>
+                <br></br>
+
                 <h2> User list: </h2>
                 {
                     userList.map((user, key)=> {
@@ -28,9 +50,19 @@ const Admin = () => {
                             <div className="title"> {user.gamer_tag} </div>
                             <div className="body">
                                 <b>Name : </b> {user.name} <br></br>
-                                <b>Email: </b> {user.email} 
+                                <b>Email: </b> {user.email} <br></br>
+
                             </div>
-                            <div className="footer"> </div>
+                            <div className="footer"> 
+                                <button onClick={() => { 
+                                    deleteUser(user.id);
+                                }}>
+                                    Delete this user
+                                </button>
+
+                                
+                            </div>
+                           
                           </div>
                         );
                     })

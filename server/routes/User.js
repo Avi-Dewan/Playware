@@ -80,5 +80,15 @@ router.post("/login", (req, res) => {
    
 });
 
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM users WHERE id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 
 module.exports = router;
