@@ -15,7 +15,7 @@ const Home = () => {
                 <br></br>
                 <br></br>
 
-                <img src = {require("./../../upload/icon.png")}alt="/" width></img>
+                <img src = {require("./../../upload/icon.png")}alt="/" ></img>
 
                 <br></br>
                 <br></br>

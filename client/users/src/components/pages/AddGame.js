@@ -34,35 +34,35 @@ function AddGame() {
                 <div className="col border shadow rounded p-3">
                 
 
-                    <div class="form-floating mb-3">
-                        <input type="text" size="lg" class="form-control" id="floatingInput"  onChange={(event) => {
+                    <div className="form-floating mb-3">
+                        <input type="text" size="lg" className="form-control" id="floatingInput"  onChange={(event) => {
                             setName(event.target.value);
                         }}></input>
-                        <label for="floatingInput">Game Name</label>
+                        <label htmlFor="floatingInput">Game Name</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="text" size="lg" class="form-control" id="floatingInput"  onChange={(event) => {
+                    <div className="form-floating mb-3">
+                        <input type="text" size="lg" className="form-control" id="floatingInput"  onChange={(event) => {
                             setGenre(event.target.value);
                         }}></input>
-                        <label for="floatingInput">Genre</label>
+                        <label htmlFor="floatingInput">Genre</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="number" size="lg" class="form-control" id="floatingInput"  onChange={(event) => {
+                    <div className="form-floating mb-3">
+                        <input type="number" size="lg" className="form-control" id="floatingInput"  onChange={(event) => {
                             setPrice(event.target.value);
                         }}></input>
-                        <label for="floatingInput">Price</label>
+                        <label htmlFor="floatingInput">Price</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="date" size="lg" class="form-control" id="floatingInput"  onChange={(event) => {
+                    <div className="form-floating mb-3">
+                        <input type="date" size="lg" className="form-control" id="floatingInput"  onChange={(event) => {
                             setRelease_Date(event.target.value);
                         }}></input>
-                        <label for="floatingInput">Release Date</label>
+                        <label htmlFor="floatingInput">Release Date</label>
                     </div>
 
-                    <button type="submit" class="btn btn-secondary" onClick={addGame}>Submit</button>
+                    <button type="submit" className="btn btn-secondary" onClick={addGame}>Submit</button>
 
                 
                 </div>

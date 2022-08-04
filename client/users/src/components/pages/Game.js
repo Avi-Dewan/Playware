@@ -37,7 +37,7 @@ const Game = () => {
                         gamesList.map((game, key)=> {
                             
                             return(
-                                <div className = 'card-container'>
+                                <div className = 'card-container' key={key}>
                                     <div className='image-container' >
                                         
                                         <img src ={ require("./../../upload/games/valorant.jpg")}  alt="/"></img>

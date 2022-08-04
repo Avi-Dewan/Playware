@@ -47,36 +47,36 @@ const addUser = () => {
 
 
             <div className="row">
-              <div className="col"><Link class="btn btn-secondary mb-3" to="/Login">Login</Link></div><div className="col"><Link class="btn btn-secondary" to="/Register">Register</Link></div>
+              <div className="col"><Link className="btn btn-secondary mb-3" to="/Login">Login</Link></div><div className="col"><Link className="btn btn-secondary" to="/Register">Register</Link></div>
             </div>
 
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+            <div className="form-floating mb-3">
+              <input type="text" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
                 setName(event.target.value);
               }}></input>
               <label for="floatingInput">Name</label>
             </div>
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+            <div className="form-floating mb-3">
+              <input type="text" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
                 setGamertag(event.target.value);
               }}></input>
               <label for="floatingInput">Gamertag</label>
             </div>
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+            <div className="form-floating mb-3">
+              <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
                 setEmail(event.target.value);
               }}></input>
               <label for="floatingInput">Email address</label>
             </div>
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password" onChange={(event) => {
+            <div className="form-floating mb-3">
+              <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={(event) => {
                 setPassword(event.target.value);
               }}></input>
               <label for="floatingPassword">Password</label>
             </div>
             
 
-            <button type="submit" class="btn btn-secondary" onClick={addUser}>Submit</button>
+            <button type="submit" className="btn btn-secondary" onClick={addUser}>Submit</button>
 
 
           
