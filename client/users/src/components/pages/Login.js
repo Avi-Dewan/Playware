@@ -1,6 +1,7 @@
 import Axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 
@@ -21,9 +22,13 @@ const Login = () => {
         password: password,
         
       }).then((res) => {
-            if(res.data.error) alert(res.data.error);
+            if(res.data.error) toast.error(res.data.error);
             else {
-                navigate("/Admin");
+                toast.success("Login successfull");
+
+                setTimeout(()=> {
+                    navigate('/admin');
+                    }, 2000);
             }
       });
     };

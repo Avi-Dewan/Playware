@@ -1,6 +1,7 @@
 import Axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
   
 
 const Register = () => {
@@ -22,9 +23,13 @@ const addUser = () => {
     
   }).then(() => {
 
-    console.log("User Added");
 
-    navigate('/admin');
+
+    toast.success("Registration Successfull");
+
+    setTimeout(()=> {
+      navigate('/admin');
+    }, 2000);
 
    
   });
@@ -51,28 +56,28 @@ const addUser = () => {
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+              <input type="text" className="form-control"  placeholder="name@example.com" onChange={(event) => {
                 setName(event.target.value);
               }}></input>
-              <label for="floatingInput">Name</label>
+              <label htmlFor="floatingInput">Name</label>
             </div>
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+              <input type="text" className="form-control"  placeholder="name@example.com" onChange={(event) => {
                 setGamertag(event.target.value);
               }}></input>
-              <label for="floatingInput">Gamertag</label>
+              <label htmlFor="floatingInput">Gamertag</label>
             </div>
             <div className="form-floating mb-3">
-              <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+              <input type="email" className="form-control" placeholder="name@example.com" onChange={(event) => {
                 setEmail(event.target.value);
               }}></input>
-              <label for="floatingInput">Email address</label>
+              <label htmlFor="floatingInput">Email address</label>
             </div>
             <div className="form-floating mb-3">
-              <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={(event) => {
+              <input type="password" className="form-control" placeholder="Password" onChange={(event) => {
                 setPassword(event.target.value);
               }}></input>
-              <label for="floatingPassword">Password</label>
+              <label htmlFor="floatingPassword">Password</label>
             </div>
             
 

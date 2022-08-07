@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 function AddGame() {
 
@@ -20,9 +21,11 @@ function AddGame() {
           
         }).then(() => {
       
-          console.log("Game Added");
+          toast.success("Game Added");
       
-          navigate('/game');
+          setTimeout(()=> {
+            navigate('/game');
+          }, 3000);
       
          
         });

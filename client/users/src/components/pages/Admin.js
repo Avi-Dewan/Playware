@@ -1,5 +1,6 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import AddGame from './AddGame';
 
 const Admin = () => {
@@ -20,6 +21,9 @@ const Admin = () => {
               return val.id !== id; // the true one will be filtered out
             })
           );
+
+            toast.success("Successfully Deleted");
+
         });
     };
 
@@ -54,7 +58,7 @@ const Admin = () => {
 
                             </div>
                             <div className="footer"> 
-                                <button onClick={() => { 
+                                <button className="btn btn-danger" onClick={() => { 
                                     deleteUser(user.id);
                                 }}>
                                     Delete this user

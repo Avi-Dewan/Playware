@@ -1,6 +1,9 @@
 
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import Admin from './components/pages/Admin';
 import Game from './components/pages/Game';
@@ -9,6 +12,7 @@ import Login from './components/pages/Login';
 import NavBar from './components/pages/NavBar';
 import Register from './components/pages/Register';
 
+
 import './App.css';
 
 function App() {
@@ -16,6 +20,7 @@ function App() {
 
       <BrowserRouter>
          <NavBar />
+
          <Routes>
 
             <Route exact path="/" element={<Home />} />
@@ -27,7 +32,8 @@ function App() {
 
          </Routes>
 
-
+         <ToastContainer />
+         
       </BrowserRouter>
 
 
