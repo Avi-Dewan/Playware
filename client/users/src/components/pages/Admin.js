@@ -14,11 +14,11 @@ const Admin = () => {
     }, []);
 
 
-    const deleteUser = (id) => {
-        Axios.delete(`http://localhost:3001/auth/${id}`).then((response) => {
+    const deleteUser = (user_id) => {
+        Axios.delete(`http://localhost:3001/auth/${user_id}`).then((response) => {
           setUserList(
             userList.filter((val) => {
-              return val.id !== id; // the true one will be filtered out
+              return val.user_id !== user_id; // the true one will be filtered out
             })
           );
 
@@ -59,7 +59,7 @@ const Admin = () => {
                             </div>
                             <div className="footer"> 
                                 <button className="btn btn-danger" onClick={() => { 
-                                    deleteUser(user.id);
+                                    deleteUser(user.user_id);
                                 }}>
                                     Delete this user
                                 </button>

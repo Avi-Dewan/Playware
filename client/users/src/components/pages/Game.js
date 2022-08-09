@@ -1,7 +1,7 @@
 import Axios from 'axios';
+import moment from 'moment';
 import React, { useEffect, useState } from "react";
 import './Card.css';
-  
 
 const Game = () => {
 
@@ -40,7 +40,7 @@ const Game = () => {
                                 <div className = 'card-container' key={key}>
                                     <div className='image-container' >
                                         
-                                        <img src ={ require("./../../upload/games/valorant.jpg")}  alt="/"></img>
+                                    <img src="https://i.ibb.co/88Vw6Ct/valorant.jpg" alt="valorant" border="0" />
                                     </div>
                             
                                     <div className='=card-content'>
@@ -52,7 +52,7 @@ const Game = () => {
                                             <p>
                                                 <b> <i> Genre: {game.genre} </i></b>
                                                 <br></br>
-                                                <b>Release date: </b> {game.release_date}
+                                                <b>Release date: </b> {moment(game.release_date).format("L")}
                                                 <br></br>
                                                 <b>Price : </b> {game.price} $
                                             </p>

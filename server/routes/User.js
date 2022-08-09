@@ -80,9 +80,60 @@ router.post("/login", (req, res) => {
    
 });
 
+router.put("/edit", (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+
+  db.query(
+      `SELECT * FROM users WHERE email = ?`, email,
+      (err, result) => {
+          if (err) {
+              console.log(err);
+          } else {
+
+              const user = result[0];
+            
+
+              if (!user) {
+                res.json({ error: "User Doesn't Exist" });
+                return;
+              }
+
+              
+            
+              bcrypt.compare(oldPassword, user.password).then((match) => {
+                if (!match) {
+                    res.json({ error: "Wrong Password! " });
+                    return;
+                } else {
+                    bcrypt.hash(newPassword, 10).then((hash) => {
+          
+                      db.query(
+                          "UPDATE users SET password = ? WHERE user_id = ? ",
+                          [hash, user.user_id],
+                          (err, result) => {
+                            if (err) {
+                              console.log(err);
+                            } else {
+                              res.send("password updated");
+                            }
+                          }
+                        );
+              
+                    });
+
+                }
+              });
+
+           }
+      }
+  );
+
+ 
+});
+
 router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  db.query("DELETE FROM users WHERE id = ?", id, (err, result) => {
+  const user_id = req.params.id;
+  db.query("DELETE FROM users WHERE user_id = ?", user_id, (err, result) => {
     if (err) {
       console.log(err);
     } else {

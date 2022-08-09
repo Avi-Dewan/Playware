@@ -18,12 +18,65 @@ router.get("/", (req, res)=> {
       );
 });
 
+router.get("/top_free", (req, res)=> {
+  db.query(
+      "SELECT * FROM games WHERE price = ? ORDER BY total_sales DESC", 0,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result);
+        }
+      }
+    );
+});
+
+router.get("/top_paid", (req, res)=> {
+  db.query(
+      "SELECT * FROM games WHERE price <> ? ORDER BY total_sales DESC", 0,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result);
+        }
+      }
+    );
+});
+
+router.get("/genres", (req, res)=> {
+  db.query(
+      "SELECT DISTINCT(genre) FROM games",
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result);
+        }
+      }
+    );
+});
+
+router.get("/gamesByGenre", (req, res)=> {
+  const {genre} = req.body;
+  db.query(
+      "SELECT * FROM games WHERE genre = ?",genre,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result);
+        }
+      }
+    );
+});
+
 
 router.get("/byId/:id",  (req, res) => {
-    const id = req.params.id;
+    const game_id = req.params.id;
     
     db.query(
-        "SELECT * FROM games where id = ?", id,
+        "SELECT * FROM games where game_id = ?", game_id,
         (err, result) => {
           if (err) {
             console.log(err);
