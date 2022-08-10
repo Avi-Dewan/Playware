@@ -27,7 +27,7 @@ const Login = () => {
                 toast.success("Login successfull");
 
                 setTimeout(()=> {
-                    navigate('/admin');
+                    navigate('/Game');
                     }, 2000);
             }
       });
