@@ -24,10 +24,13 @@ const Login = () => {
       }).then((res) => {
             if(res.data.error) toast.error(res.data.error);
             else {
+                console.log(res.data);
+                localStorage.setItem("user", res.data);
+
                 toast.success("Login successfull");
 
                 setTimeout(()=> {
-                    navigate('/admin');
+                    navigate('/admnin');
                     }, 2000);
             }
       });

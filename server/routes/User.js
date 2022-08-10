@@ -18,6 +18,17 @@ router.get("/", (req, res)=> {
     );
 });
 
+router.get("/:id", (req, res) => {
+  const user_id = req.params.id;
+  db.query("SELECT * FROM users WHERE user_id = ?", user_id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 router.post("/", (req, res) => {
     const {name, email, password, gamer_tag} = req.body;
 
@@ -130,6 +141,9 @@ router.put("/edit", (req, res) => {
 
  
 });
+
+
+
 
 router.delete("/:id", (req, res) => {
   const user_id = req.params.id;
