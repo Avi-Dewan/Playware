@@ -10,18 +10,15 @@ const Home = () => {
                 <hr></hr>
                 <br></br>
 
-                <h1 > <i> Welcome to PlayWare  </i> </h1>
-
-                <br></br>
-                <br></br>
-
-                <img src = {require("./../../upload/icon.png")}alt="/" ></img>
-
-                <br></br>
-                <br></br>
+                <h1 > <b> Welcome to PlayWare  </b> </h1>
+                <h6>  Here we play games, make games  </h6>
                 <br></br>
 
-                <h5> <i> here we play games, make games  </i></h5>
+                <img src = {require("./../../../src/upload/download.png")}  alt="/" ></img>
+
+                <br></br>
+
+                
                 
                 
 
