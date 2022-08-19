@@ -11,6 +11,7 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import NavBar from './components/pages/NavBar';
 import Register from './components/pages/Register';
+import User from './components/pages/User';
 
 import './App.css';
 
@@ -28,7 +29,7 @@ function App() {
             <Route exact path="/Register" element={<Register />} />
             <Route exact path="/Game" element={<Game />} />
             <Route exact path="/Admin" element={<Admin />} />
-            {/* <Route exact path="/User" element={<User/>} /> */}
+            <Route exact path="/User" element={<User/>} />
 
 
          </Routes>

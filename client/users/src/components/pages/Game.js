@@ -22,6 +22,7 @@ const Game = () => {
         Axios.get(`http://localhost:3001/games/top_paid`).then((response) => {
             setTopPaidGames(response.data);
         });
+
     }, []);
 
 
@@ -41,7 +42,8 @@ const Game = () => {
 
                 <div className='wrapper'>
                     {   
-                        topPaidGames.slice(0, 3).map((game, key)=> {
+                        
+                        topPaidGames.map((game, key)=> {
                             
                             return(
                                 <div className = 'card-container' key={key}>
@@ -111,7 +113,7 @@ const Game = () => {
 
                 <div className='wrapper'>
                     {
-                        topFreeGames.slice(0, 3).map((game, key)=> {
+                        topFreeGames.map((game, key)=> {
                             
                             return(
                                 <div className = 'card-container' key={key}>

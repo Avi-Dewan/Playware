@@ -18,14 +18,30 @@ router.get("/", (req, res)=> {
       );
 });
 
+router.get("/top_games", (req, res)=> {
+
+  // const queryObject = URL.parse(req.url, true).query;
+  // console.log(queryObject);
+
+  // console.log(req.query);
+
+  if(req.query.type == "free") {
+    res.send("top free")
+  } else {
+    res.send("top_paid")
+  }
+
+  
+});
+
 router.get("/top_free", (req, res)=> {
   db.query(
-      "SELECT * FROM games WHERE price = ? ORDER BY total_sales DESC", 0,
-      (err, result) => {
+    "CALL top_free_games()",
+      (err, results) => {
         if (err) {
           console.log(err);
         } else {
-          res.json(result);
+          res.json(results[0]);
         }
       }
     );
@@ -33,12 +49,12 @@ router.get("/top_free", (req, res)=> {
 
 router.get("/top_paid", (req, res)=> {
   db.query(
-      "SELECT * FROM games WHERE price <> ? ORDER BY total_sales DESC", 0,
-      (err, result) => {
+      "CALL top_paid_games",
+      (err, results) => {
         if (err) {
           console.log(err);
         } else {
-          res.json(result);
+          res.json(results[0]);
         }
       }
     );

@@ -1,15 +1,14 @@
 import { Axios } from 'axios';
 import React, { useEffect, useState } from 'react';
-const { verify } = require("jsonwebtoken");
-
+// const { verify } = require("jsonwebtoken");
 
 function User() {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        const signedUser = verify(user, "importantsecret");
+        // const signedUser = verify(user, "importantsecret");
 
-        Axios.get(`http://localhost:3001/auth/${signedUser.user_id}`).then((response) => {
+        Axios.get(`http://localhost:3001/auth/1`).then((response) => {
             setUser(response.data);
         });
 

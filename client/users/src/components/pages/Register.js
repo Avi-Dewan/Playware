@@ -22,9 +22,7 @@ const addUser = () => {
     gamer_tag:gamertag,
     
   }).then(() => {
-
-
-
+    
     toast.success("Registration Successfull");
 
     setTimeout(()=> {
