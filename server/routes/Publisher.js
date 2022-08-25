@@ -2,6 +2,7 @@ const express = require("express");
 const db = require('../database');
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../middlewares/publisherAuthMiddleware");
 
 const router = express.Router();
 
@@ -18,14 +19,18 @@ router.get("/", (req, res)=> {
     );
 });
 
+router.get("/auth",validateToken, (req, res)=> {
+  res.send(req.publisher);
+});
+
 router.post("/", (req, res) => {
-    const {name, password, wallet} = req.body;
+    const {name, password, legal_terms} = req.body;
 
     bcrypt.hash(password, 10).then((hash) => {
         
         db.query(
-            "INSERT INTO publishers(name, password, wallet) VALUES (?, ?, ?)",
-            [name, hash, wallet],
+            "INSERT INTO publishers(name, password, legal_terms) VALUES (?, ?, ?)",
+            [name, hash, legal_terms],
             (err, result) => {
               if (err) {
                 console.log(err);
@@ -61,23 +66,40 @@ router.post("/login", (req, res) => {
               
                 bcrypt.compare(password, user.password).then((match) => {
                   if (!match) {
-                      res.json({ error: "Wrong name And Password Combination" });
+                      res.json({ error: "Wrong Name And Password Combination" });
                       return;
                   } 
             
               
                   const accessToken = sign(
-                    { email: user.email, id: user.id },
+                    {  publisher_id: user.publisher_id, publisher_name: user.name, publisher_status: user.status  },
                     "importantsecret"
                   );
               
-                  res.json(accessToken);
+                  res.json({token: accessToken, publisher_name: user.name, publisher_id: user.publisher_id, publisher_status: user.status });
                 });
              }
         }
     );
   
    
+});
+
+router.put("/register", (req, res) => {
+
+  const {publisher_id} = req.body;
+
+  db.query(
+      "UPDATE publishers SET status = ?  WHERE publisher_id = ? ", [ "registered", publisher_id ],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Publisher registered");
+        }
+      }
+  );
+
 });
 
 router.delete("/delete/:id", (req, res) => {

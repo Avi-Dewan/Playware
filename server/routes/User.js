@@ -2,6 +2,7 @@ const express = require("express");
 const db = require('../database');
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../middlewares/userAuthmiddleWare");
 
 const router = express.Router();
 
@@ -18,6 +19,11 @@ router.get("/", (req, res)=> {
     );
 });
 
+router.get("/auth",validateToken, (req, res)=> {
+  res.send(req.user);
+});
+
+
 router.get("/:id", (req, res) => {
   const user_id = req.params.id;
   db.query("SELECT * FROM users WHERE user_id = ?", user_id, (err, result) => {
@@ -28,6 +34,7 @@ router.get("/:id", (req, res) => {
     }
   });
 });
+
 
 router.post("/", (req, res) => {
     const {name, email, password, gamer_tag} = req.body;
@@ -75,14 +82,15 @@ router.post("/login", (req, res) => {
                       res.json({ error: "Wrong Username And Password Combination" });
                       return;
                   } 
-            
+                  
+                //  console.log(user);
               
                   const accessToken = sign(
-                    { email: user.email, id: user.id },
+                    {  user_id: user.user_id, user_name: user.name },
                     "importantsecret"
                   );
               
-                  res.json(accessToken);
+                  res.json({token: accessToken, user_name: user.name, user_id: user.user_id});
                 });
              }
         }
@@ -141,7 +149,6 @@ router.put("/edit", (req, res) => {
 
  
 });
-
 
 
 

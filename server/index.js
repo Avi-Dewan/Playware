@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Routers 
 const userRouter = require("./routes/User");
-app.use("/auth", userRouter);
+app.use("/users", userRouter);
 
 
 const publisherRouter = require("./routes/Publisher");
@@ -21,6 +21,9 @@ app.use("/developers", developerRouter);
 
 const gameRouter = require("./routes/Game");
 app.use("/games", gameRouter);
+
+const adminRouter = require("./routes/Admin");
+app.use("/admin", adminRouter);
 
 
 
