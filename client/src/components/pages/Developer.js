@@ -1,6 +1,5 @@
 import Axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-
 import { toast } from "react-toastify";
 import { AuthContext } from "../../helpers/AuthContext";
 import './Card.css';
@@ -18,11 +17,16 @@ const Developer = () => {
   const [images, setImages] = useState([]);
   const [gamesList, setGameList] = useState([]);
   const [publisher, setPublisher] = useState("");
+  const [addOnsList, setAddOnsList] = useState([]);
+  const [addOnsName, setAddOnsName] = useState("");
+  const [gameName, setGameName] = useState("");
+  const [price, setPrice] = useState("");
+
 
   const addGame = () => {
 
-    if(authState.developer_status !== "registered") {
-          toast.error("You're not registered yet! Please contact your publihser..")
+    if(authState.developer_status !== "Registered") {
+          toast.error("You're not registered yet! Please contact your publishser..")
           return;
     }
 
@@ -30,7 +34,7 @@ const Developer = () => {
 
     formData.append('image', images[0]);
 
-    console.log(formData);
+    // console.log(formData);
 
     const url = "https://api.imgbb.com/1/upload?key=bf474a7ad7a850314853ed811e1f83e3";
 
@@ -59,40 +63,88 @@ const Developer = () => {
 };
 
 
-    const pullFromStore = (game_id) => {
-    Axios.put("http://localhost:3001/games/updateStatus", {
-            state: 1,
-            game_id: game_id
-        }).then((response) => {
-            if(response.data.success)
-                toast.success("Successfully pulled the game from Store");
-        });
+    const pullGame = (game_id, state) => {
+        if(state==11)
+            state=9;
+        if(state==10)
+            state=8;
+        if(state==2)
+            state=5;
+        if(state==3)
+            state=6;
+        if(state==4)
+            state=7;
+
+        Axios.put("http://localhost:3001/games/updateStatus", {
+                state: state,
+                game_id: game_id
+            }).then((response) => {
+                if(response.data.success)
+                    toast.success("Successfully pulled the game from Store");
+            });
     };
 
-    const reqToPublish = (game_id) => {
-    Axios.put("http://localhost:3001/games/updateStatus", {
-            state: 2,
-            game_id: game_id
-        }).then((response) => {
-            if(response.data.success)
-                toast.success("Successfully requested the game for publishing");
-        });
+    const reqToPublish = (game_id, state) => {
+        if(state == 1)
+            state = 2;
+
+        
+        Axios.put("http://localhost:3001/games/updateStatus", {
+                state: state,
+                game_id: game_id
+            }).then((response) => {
+                if(response.data.success)
+                    toast.success("Successfully requested the game for publishing");
+            });
     };
+
+
+    const addAddons= () => {
+
+       
+        Axios.post("http://localhost:3001/dlc/", {
+          dlc_name: addOnsName,
+          game_name: gameName,
+          price: price,
+          developer_id: authState.developer_id
+          }).then((response) => {
+                if(response.data.error) {
+                    toast.error(response.data.error);
+                } else {
+                    toast.success(response.data);
+                }
+          });
+   
+    };
+
+    const deleteAddOns = (AddOns_id) => {
+
+        Axios.delete(`http://localhost:3001/dlc?id=${AddOns_id}`).then((response) => {
+            toast.success("Deleted");
+          });
+   
+    };
+
 
  
 
   useEffect(() => {
       
-      Axios.get(`http://localhost:3001/games/`).then((response) => {
-          setGameList(response.data);
-      });
-
-    //   console.log(authState);
-      
       if(authState.developer_id) {
+
+
+        Axios.get(`http://localhost:3001/games/yourOnes?who=developer&id=${authState.developer_id}`).then((response) => {
+            setGameList(response.data);
+        });
+
+
         Axios.get(`http://localhost:3001/developers/getPublisher/${authState.developer_id}`).then((response) => {
             setPublisher(response.data);
         });
+
+        Axios.get(`http://localhost:3001/dlc/developer?id=${authState.developer_id}`).then((response) => {
+            setAddOnsList(response.data);
+        }); 
       }
      
   }, [authState]);
@@ -264,7 +316,7 @@ const Developer = () => {
                                                     game.status === "Developed" ? 
                                                     <div className='btn' >
                                                         <button type="submit" onClick={ () => 
-                                                            reqToPublish(game.game_id)} >
+                                                            reqToPublish(game.game_id, game.state)} >
                                                             <b>
                                                             Request To Publish
                                                             </b>
@@ -273,9 +325,9 @@ const Developer = () => {
                                                     
                                                     <div className='btn' >
                                                         <button  type="submit" onClick={ () => 
-                                                            pullFromStore(game.game_id)} >
+                                                            pullGame(game.game_id, game.state)} >
                                                             <b>
-                                                            Pull From Store
+                                                            Request To Pull
                                                             </b>
                                                         </button>
                                                 
@@ -291,8 +343,12 @@ const Developer = () => {
                                     );
                                 })
                             }
-                        </div>
 
+                        </div>
+                        
+                        <br></br>
+                        <br></br>
+                        <br></br>
                 
                 </div>
 
@@ -311,12 +367,154 @@ const Developer = () => {
                     </div>
                 </div>
 
+                <br></br>
+                <br></br>
+                <hr></hr>
+                <br></br>
+                <br></br>
                 
+                <div className="row mb-4">
+
+                    <div className="col-lg-3"></div>
+
+                    <div className="col-lg-6 border shadow rounded p-3">
+
+                        <h2> <b> Add Ons Upload Section: </b> </h2>
+                        <br></br>
+
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+                            setAddOnsName(event.target.value);
+                            }}></input>
+                            <label for="floatingInput">Name</label>
+                        </div>
+
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+                            setGameName(event.target.value);
+                            }}></input>
+                            <label for="floatingInput">Game Name</label> 
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+                            setPrice(event.target.value);
+                            }}></input>
+                            <label for="floatingInput">Price</label> 
+                        </div>
+
+
+                        <div className="row">
+                            <div className="col-lg-4"></div>
+                            <div className="col-lg-4"><button type="submit" className="btn btn-secondary container-fluid"  onClick={addAddons}>Add</button></div> 
+                            <div className="col-lg-4"></div>  
+                        </div> 
+
+                    </div>
+
+                    <div className="col-lg-3"></div>
+
+                </div>
+
+
+
+
+
+
+                <br></br>
+                <br></br>
+                <hr></hr>
+                
+
+
+
+                <div className="row mb-4">
+
+                     <h2> <b> Add Ons: </b></h2>
+                     <br></br>
+                     <br></br>
+                     <hr></hr>
+                     <br></br>
+                    <br></br>
+
+
+                    <div className="col-lg-12 col-lg-6 border shadow rounded p-3">
+
+                        <div className="container">
+                        
+
+
+                            <br></br>
+                            <br></br>
+                            <hr></hr>
+                            <br></br>
+                            <br></br>
+
+                    
+                            <h1 align="center">  List of AddOns </h1>
+                            <hr></hr>
+                            <br></br>
+                
+                            <div className='wrapper'>
+                                {   
+                                    addOnsList.map((addOns, key)=> {
+                                        
+                                        return(
+                                            <div className = 'card-container' key={key}>
+                                            
+                                                <div className='=card-content'>
+                                                    <div className='card-title'>
+                                                        <h3>{addOns.name}</h3>
+                                                    </div>
+                                        
+                                                    <div className='card-body'>
+                                                        <p>
+                                                        
+                                                            <br></br>
+                                                            <b>Price : </b> {addOns.price} $
+                                                            <br></br>
+                                                            <b>Game : </b> {addOns.game_name}
+                                                            <br></br>
+                                                        
+                                                        </p>
+                                                        
+                                                    </div>
+                                        
+                                                </div>
+
+                                                <br></br>
+    
+                                                <div className='btn' >
+                                                    <button type="submit" onClick={ () => 
+                                                        deleteAddOns(addOns.dlc_id)} >
+                                                        <b>
+                                                        Delete
+                                                        </b>
+                                                    </button>
+                                                </div> 
+                                                                
+                                                <br></br>
+                                                <br></br>
+                                                <br></br>
+                                            </div>
+                                        );
+                                    })
+                                }
+                            </div>
+
+                            
+                            </div>
+
+                    </div>
+                </div>
 
             </div>
         </div>
 
     );
 };
+
 
 export default Developer;

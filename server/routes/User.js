@@ -99,6 +99,24 @@ router.post("/login", (req, res) => {
    
 });
 
+router.put("/updateStatus", (req, res) => {
+
+  const {id, state} = req.query;
+
+  let status = "";
+  
+  if(state == 1) status = "Registered";
+  else status = "Banned";
+
+  db.query("UPDATE users SET status = ? WHERE user_id = ?", [status, id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 router.put("/edit", (req, res) => {
   const { email, oldPassword, newPassword } = req.body;
 

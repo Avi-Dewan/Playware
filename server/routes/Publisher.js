@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/", (req, res)=> {
   db.query(
-      "SELECT * FROM publishers",
+      "SELECT * FROM publishers WHERE status != ?", "Rejected",
       (err, result) => {
         if (err) {
           console.log(err);
@@ -85,22 +85,23 @@ router.post("/login", (req, res) => {
    
 });
 
-router.put("/register", (req, res) => {
+router.put("/updateStatus", (req, res) => {
 
-  const {publisher_id} = req.body;
+  let {state, id} = req.body;
 
   db.query(
-      "UPDATE publishers SET status = ?  WHERE publisher_id = ? ", [ "registered", publisher_id ],
+      "CALL update_publisher_status(?, ?) ", [state , id],
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          res.send("Publisher registered");
+          res.send({success: true});
         }
       }
   );
 
 });
+
 
 router.delete("/delete/:id", (req, res) => {
   const publisher_id = req.params.id;

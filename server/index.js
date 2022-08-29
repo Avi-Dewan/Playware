@@ -11,19 +11,31 @@ app.use(express.json());
 const userRouter = require("./routes/User");
 app.use("/users", userRouter);
 
-
 const publisherRouter = require("./routes/Publisher");
 app.use("/publishers", publisherRouter);
 
 const developerRouter = require("./routes/Developer");
 app.use("/developers", developerRouter);
 
+const adminRouter = require("./routes/Admin");
+app.use("/admin", adminRouter);
 
 const gameRouter = require("./routes/Game");
 app.use("/games", gameRouter);
 
-const adminRouter = require("./routes/Admin");
-app.use("/admin", adminRouter);
+const dlcRouter = require("./routes/Dlc");
+app.use("/dlc", dlcRouter);
+
+const subscriptionRouter = require("./routes/Subscription");
+app.use("/subscriptions", subscriptionRouter);
+
+const dealsRouter = require("./routes/Deals");
+app.use("/deals", dealsRouter);
+
+const redeemRouter = require("./routes/Redeem");
+app.use("/redeems", redeemRouter);
+
+
 
 
 

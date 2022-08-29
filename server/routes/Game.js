@@ -30,35 +30,28 @@ router.get("/top_games", (req, res)=> {
   } else {
     res.send("top_paid")
   }
-
   
 });
 
-router.get("/top_free", (req, res)=> {
+
+router.get("/yourOnes", (req, res)=> {
+
+  const {who, id} = req.query;
+
+  // console.log(req.query);
+
   db.query(
-    "CALL top_free_games()",
-      (err, results) => {
+      "CALL get_your_games(?, ?)", [who, id],
+      (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          res.json(results[0]);
+          res.json(result[0]);
         }
       }
     );
 });
 
-router.get("/top_paid", (req, res)=> {
-  db.query(
-      "CALL top_paid_games()",
-      (err, results) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.json(results[0]);
-        }
-      }
-    );
-});
 //can be a procedure
 router.get("/genres", (req, res)=> {
   db.query(
@@ -72,6 +65,7 @@ router.get("/genres", (req, res)=> {
       }
     );
 });
+
 
 router.get("/gamesByGenre", (req, res)=> {
   const {genre} = req.body;
@@ -124,14 +118,23 @@ router.post("/developed", (req, res) => {
 
 router.put("/updateStatus", (req, res) => {
 
-  let {state, game_id, price} = req.body;
+  let {state, game_id, price, developer_cut, publisher_cut} = req.body;
 
-  if(state != 3 ) {
+  // console.log(req.body);
+
+  if(state != 3 && state != 6 ) {
       price = 0;
   }  
 
+  if(!(state == 4 || state == 7 || state == 9 || state == 11 )) {
+    developer_cut = 40;
+    publisher_cut = 50;
+  }
+
+  // console.log(state , game_id, price, developer_cut, publisher_cut);
+  
   db.query(
-      "CALL update_game_status(?, ?, ?) ", [state , game_id, price],
+      "CALL update_game_status(?, ?, ?, ?, ?) ", [state , game_id, price, developer_cut, publisher_cut],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -143,56 +146,6 @@ router.put("/updateStatus", (req, res) => {
 
 });
 
-// router.put("/requested", (req, res) => {
-
-//   const {game_id, price} = req.body;
-
-//   db.query(
-//       "UPDATE games SET status = ?, price = ?  WHERE game_id = ? ", ["Requested", price, game_id ],
-//       (err, result) => {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.send("Game - requested to stored");
-//         }
-//       }
-//   );
-
-// });
-
-// router.put("/published", (req, res) => {
-
-//   const {game_id, price} = req.body;
-
-//   db.query(
-//       "UPDATE games SET status = ?, price = ?  WHERE game_id = ? ", ["Published", price, game_id ],
-//       (err, result) => {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.send("Game - requested to stored");
-//         }
-//       }
-//   );
-
-// });
-
-// router.put("/stored", (req, res) => {
-
-//   const {game_id, release_date} = req.body;
-
-//   db.query(
-//       "UPDATE games SET status = ?, release_date = ?  WHERE game_id = ? ",  ["Stored", release_date ,game_id ],
-//       (err, result) => {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.send("Game stored");
-//         }
-//       }
-//   );
-
-// });
 
 
 

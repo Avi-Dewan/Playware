@@ -7,8 +7,9 @@ const { validateToken } = require("../middlewares/developerAuthMiddleware");
 const router = express.Router();
 
 router.get("/", (req, res)=> {
+  const {publisher_id} = req.query;
   db.query(
-      "SELECT * FROM developers",
+      "SELECT * FROM developers WHERE publisher_id = ? AND status != ?", [publisher_id,  "Rejected"],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -120,17 +121,17 @@ router.post("/login", (req, res) => {
 });
 
 
-router.put("/register", (req, res) => {
+router.put("/updateStatus", (req, res) => {
 
-  const {developer_id} = req.body;
+  let {state, id} = req.body;
 
   db.query(
-      "UPDATE developers SET status = ?  WHERE developer_id = ? ",  ["registered", developer_id ],
+      "CALL update_developer_status(?, ?) ", [state , id],
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          res.send("Developer registered");
+          res.send({success: true});
         }
       }
   );

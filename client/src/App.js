@@ -42,6 +42,7 @@ function App() {
       publisher_id: null,
       publisher_status: null,
       publisher_is_logged: false,
+      
     });
     
     // const [authStateDeveloper, setAuthStateDeveloper] = useState({

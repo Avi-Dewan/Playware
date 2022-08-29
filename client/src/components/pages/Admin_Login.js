@@ -1,35 +1,36 @@
 import Axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 
 const Admin_Login = () => {
-
-
-
+    
+    let navigate = useNavigate();
+    
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     
     const Check = () => {
-      Axios.post("http://localhost:3001/auth/Developer_Login", {
+      Axios.post("http://localhost:3001/admin/login", {
       
         name: name,
         password: password,
         
       }).then((res) => {
-       console.log(res)
+            if(res.data.error) {
+                toast.error(res.data.error);
+            } else {
+                toast.success("Login successfull");
+
+                setTimeout(()=> {
+                    navigate('/Admin');
+                    }, 1000);
+
+            }
       });
     };
-  
-
-
-
-
-
-
-
 
 
     return (

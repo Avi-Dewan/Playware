@@ -1,5 +1,5 @@
 import React from "react";
-import "./Hover.css"
+import "./Hover.css";
 
 const Types = () => {
 

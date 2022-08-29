@@ -42,7 +42,7 @@ router.post("/login", (req, res) => {
               
   
                 if (!admin) {
-                  res.json({ error: "No Such Admin Doesn't Exist" });
+                  res.json({ error: "No Such Admint exists" });
                   return;
                 }
 

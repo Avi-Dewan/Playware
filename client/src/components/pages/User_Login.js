@@ -50,7 +50,7 @@ const User_Login = () => {
                 console.log(authState);
 
                 setTimeout(()=> {
-                    navigate('/Game');
+                    navigate('/Home');
                     }, 2000);
             }
       });

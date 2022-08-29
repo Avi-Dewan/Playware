@@ -3,10 +3,12 @@ import moment from 'moment';
 import React, { useEffect, useState } from "react";
 import './Card.css';
 
-const Game = () => {
+const Sub_Add = () => {
 
 
     const [gamesList, setGameList] = useState([]);
+    const [ArrivalDate, setArrivalDate] = useState();
+    const [DelistDate, setDelistDate] = useState();
    
 
     useEffect(() => {
@@ -16,6 +18,21 @@ const Game = () => {
 
     }, []);
 
+    const AddGame=(game_id)=>{
+        
+        Axios.post('http://localhost:3001/game/operation',{
+            id:game_id, 
+            ArrivalDate:ArrivalDate,
+            DelistDate:DelistDate
+        });
+      };
+
+      const Delist=(game_id)=>{
+        
+        Axios.post('http://localhost:3001/game/operation',{
+            id:game_id, 
+        });
+      };
 
 
 
@@ -62,8 +79,6 @@ const Game = () => {
                                                 <b>Price : </b> {game.price} $
                                                 <br></br>
                                                 <b>Total sales : </b> {game.total_sales}
-                                                <br></br>
-                                                <b>wishlisted : </b> {game.wishlist}
                                             </p>
                                             
                                         </div>
@@ -71,20 +86,19 @@ const Game = () => {
                                     </div>
 
                                     <br></br>
+
+                                    <input type="integer" id="updateInput" onChange={(e)=>{setArrivalDate(e.target.value)}}></input>
+                                    <input type="integer" id="updateInput" onChange={(e)=>{setDelistDate(e.target.value)}}></input>
                             
                                     <div className='btn'>
-                                        <button>
-                                            <a href='/Game'>
-                                                Buy
-                                            </a>
+                                        <button onClick={()=>{AddGame(publisher.id,publisher.state)}}>
+                                               Add
                                         </button>
                                         
                                     </div>
                                     <div className='btn'>
-                                        <button>
-                                            <a href='/Game'>
-                                            (+) Add to wishlist
-                                            </a>
+                                        <button onClick={()=>{Delist(publisher.id,publisher.state)}}>
+                                               Delete
                                         </button>
                                         
                                     </div>
@@ -106,4 +120,4 @@ const Game = () => {
     );
 };
 
-export default Game;
+export default Sub_Add;

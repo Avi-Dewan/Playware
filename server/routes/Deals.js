@@ -4,14 +4,15 @@ const db = require('../database');
 
 const router = express.Router();
 
+
 router.post("/", (req, res)=> {
 
-    const {name, price} = req.body;
+    const {name, cut} = req.body;
   
     // console.log(req.query);
   
     db.query(
-        "INSERT into subscriptions(name, price) VALUES(?, ?)",[name, price],
+        "INSERT into deals(name, cut) VALUES(?, ?)",[name, cut],
         (err, result) => {
           if (err) {
             console.log(err);
@@ -23,11 +24,9 @@ router.post("/", (req, res)=> {
 });
 
 router.get("/", (req, res)=> {
-
-    
   
     db.query(
-        "SELECT * FROM subscriptions",
+        "SELECT * FROM deals",
         (err, result) => {
           if (err) {
             console.log(err);
@@ -38,7 +37,6 @@ router.get("/", (req, res)=> {
       );
 });
 
-
 router.delete("/", (req, res)=> {
 
     const {id} = req.query;
@@ -46,7 +44,7 @@ router.delete("/", (req, res)=> {
     // console.log(id);
   
     db.query(
-        "DELETE FROM subscriptions WHERE subscription_id = ?", id,
+        "DELETE FROM deals WHERE deal_id = ?", id,
         (err, result) => {
           if (err) {
             console.log(err);

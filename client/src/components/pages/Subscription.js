@@ -1,69 +1,83 @@
-import Axios from 'axios';
+import Axios from "axios"
+import React from "react";
+import { Link } from "react-router-dom"
+import { useState } from "react";
+import { useEffect } from "react";
+
 import moment from 'moment';
-import React, { useEffect, useState } from "react";
 import './Card.css';
 
-const Game = () => {
 
+const Subscription= () => {
 
-    const [gamesList, setGameList] = useState([]);
-   
+    const [subList, setSub] = useState([]);
 
     useEffect(() => {
-        Axios.get(`http://localhost:3001/games/`).then((response) => {
-            setGameList(response.data);
+        Axios.get('http://localhost:3001/Subscription/').then((response) => {
+            setSub(response.data);
         });
-
     }, []);
 
 
 
+    const EnterSubscription=(Sub_id)=>{
+                  
+        Axios.post('http://localhost:3001/subs/operation',{
+            Sub_id:Sub_id
+        });
+      };
+
+
 
     return (
-
         <div className="container">
-              
+            <div className="py-4">
+
+{//Subscription Section--------------------------------------------------------------------------------------------------
+}
+
+           
+
+
+
+
+
+            <div className="row mb-4">
+                  <h2>Subscription List:</h2>
+            <div className="col-lg-12 col-lg-6 border shadow rounded p-3">
+            <div className="container">
+        
                 <br></br>
                 <br></br>
                 <hr></hr>
                 <br></br>
                 <br></br>
-
-          
-                <h1 align="center">    List of All Games </h1>
                 <hr></hr>
                 <br></br>
-
-                
-
-    
                 <div className='wrapper'>
                     {   
-                        gamesList.map((game, key)=> {
+                        subList.map((subscription, key)=> {
                             
                             return(
                                 <div className = 'card-container' key={key}>
-                                    <div className='image-container' >
-                                        
-                                    <img src={game.img_src} alt={game.name} height="250px" width="290px" border="0" />
-                                    </div>
-                            
+                                    
                                     <div className='=card-content'>
                                         <div className='card-title'>
-                                            <h3>{game.name}</h3>
+                                            <h3>{subscription.name}</h3>
                                         </div>
                             
                                         <div className='card-body'>
                                             <p>
-                                                <b> <i> Genre: {game.genre} </i></b>
                                                 <br></br>
-                                                <b>Release date: </b> {moment(game.release_date).format("L")}
+                                                <b> <i> Name: {subscription.name} </i></b>
                                                 <br></br>
-                                                <b>Price : </b> {game.price} $
+                                                <b>Number of Games: </b> {subscription.number}
                                                 <br></br>
-                                                <b>Total sales : </b> {game.total_sales}
+                                                <b>Monthly Payment: </b> {subscription.price}
                                                 <br></br>
-                                                <b>wishlisted : </b> {game.wishlist}
+                                                <b>Left time: </b> {subscription.time}
+                                                <br></br>
+                                                  
                                             </p>
                                             
                                         </div>
@@ -73,18 +87,8 @@ const Game = () => {
                                     <br></br>
                             
                                     <div className='btn'>
-                                        <button>
-                                            <a href='/Game'>
-                                                Buy
-                                            </a>
-                                        </button>
-                                        
-                                    </div>
-                                    <div className='btn'>
-                                        <button>
-                                            <a href='/Game'>
-                                            (+) Add to wishlist
-                                            </a>
+                                        <button onClick={()=>{EnterSubscription(subscription.id)}}>
+                                               Enter
                                         </button>
                                         
                                     </div>
@@ -101,9 +105,17 @@ const Game = () => {
 
            
         </div>
-        
+            </div>
+            </div>
+
+
+
+
+
+            </div>
+        </div>
 
     );
 };
 
-export default Game;
+export default Subscription;
