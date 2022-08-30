@@ -2,6 +2,7 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import moment from 'moment';
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import './Card.css';
 
@@ -22,6 +23,8 @@ const Admin= () => {
     const [Price, setPrice] = useState();
     const [dealsName, setDealsName] = useState();
     const [cut, setCut] = useState();
+
+    let navigate = useNavigate();
     
 
     
@@ -650,7 +653,9 @@ const Admin= () => {
                                             return(
                                                 <div className = 'card-container' key={key}>
                                                     
-                                                    <div className='=card-content'>
+                                                    <div className='=card-content' onClick= {()=>  { 
+                                                        navigate(`/Sub_Add/${subscription.subscription_id}`)
+                                                    }}>
                                                         <div className='card-title'>
                                                             <h3>{subscription.name}</h3>
                                                         </div>
@@ -763,7 +768,9 @@ const Admin= () => {
                                         return(
                                             <div className = 'card-container' key={key}>
                                                 
-                                                <div className='=card-content'>
+                                                <div className='=card-content' onClick= {()=>  { 
+                                                        navigate(`/Deals_Add/${deals.deal_id}`)
+                                                    }}>
                                                     <div className='card-title'>
                                                         <h3>{deals.name}</h3>
                                                     </div>

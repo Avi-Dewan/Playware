@@ -10,6 +10,8 @@ import './Card.css';
 
 const Subscription= () => {
 
+
+    
     const [subList, setSub] = useState([]);
 
     useEffect(() => {
@@ -33,8 +35,6 @@ const Subscription= () => {
         <div className="container">
             <div className="py-4">
 
-{//Subscription Section--------------------------------------------------------------------------------------------------
-}
 
            
 

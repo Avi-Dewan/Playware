@@ -31,17 +31,17 @@ const User = () => {
         
         Axios.post('http://localhost:3001/game/operation',{
             id:game_id, 
-            ArrivalDate:ArrivalDate,
-            DelistDate:DelistDate
+            // ArrivalDate:ArrivalDate,
+            // DelistDate:DelistDate
         });
       };
 
       const EnterSub=(sub_id)=>{
         
         Axios.post('http://localhost:3001/sub/operation',{
-            id:game_id, 
-            ArrivalDate:ArrivalDate,
-            DelistDate:DelistDate
+            // id:game_id, 
+            // ArrivalDate:ArrivalDate,
+            // DelistDate:DelistDate
         });
       };
 

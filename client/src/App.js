@@ -12,6 +12,7 @@ import Admin from './components/pages/Admin';
 import Admin_Login from './components/pages/Admin_Login';
 import Admin_Options from './components/pages/Admin_Options';
 import Buy from './components/pages/Buy';
+import Deals_Add from './components/pages/Deals_Add';
 import Developer from './components/pages/Developer';
 import Developer_Login from './components/pages/Developer_Login';
 import Developer_Register from './components/pages/Developer_Register';
@@ -22,7 +23,9 @@ import NavBar from './components/pages/NavBar';
 import Publisher from './components/pages/Publisher';
 import Publisher_Login from './components/pages/Publisher_Login';
 import Publisher_Register from './components/pages/Publisher_Register';
+import Sub_Add from './components/pages/Sub_Add';
 import Types from './components/pages/Types';
+import User from './components/pages/User';
 import User_Login from './components/pages/User_Login';
 import User_Register from './components/pages/User_Register';
 import { AuthContext } from "./helpers/AuthContext";
@@ -201,6 +204,10 @@ function App() {
             <Route exact path="/Game" element={<Game />} />
             <Route exact path="/Buy" element={<Buy />} />
 
+            <Route exact path="/User" element={<User />} />
+            <Route exact path="/Sub_Add/:id" element={<Sub_Add />} />
+            <Route exact path="/Deals_Add/:id" element={<Deals_Add/>} />
+
 
          </Routes>
 
@@ -213,15 +220,6 @@ function App() {
       
 
       </div>
-
-
-
-
-
-
-
-
-
 
 
    );
