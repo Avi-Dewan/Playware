@@ -86,6 +86,22 @@ router.get("/notSubscribed/:id", (req, res)=> {
     );
 });
 
+router.get("/user/:id", (req, res)=> {
+
+  const id = req.params.id;
+
+  db.query(
+      "CALL get_your_subscriptions(?)", id,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result[0]);
+        }
+      }
+    );
+});
+
 
 router.get("/", (req, res)=> {
 
@@ -156,5 +172,22 @@ router.delete("/deleteGame", (req, res)=> {
       }
     );
 });
+
+router.post("/userSubscribe", (req, res)=> {
+
+  const {s_id, u_id} = req.query;
+
+  db.query(
+      "INSERT INTO subscribed(subscription_id, user_id) VALUES (?, ?)", [s_id, u_id],
+      (err, result) => {
+        if (err) {
+          res.send({error: err.message})
+        } else {
+          res.json(result);
+        }
+      }
+    );
+});
+
 
 module.exports = router;

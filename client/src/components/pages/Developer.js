@@ -11,7 +11,7 @@ const Developer = () => {
   
   const {authState} = useContext(AuthContext);
 
-
+  const [dev, setDev] = useState({});
   const [name, setName] = useState("");
   const [genre, setGenre] = useState("");
   const [images, setImages] = useState([]);
@@ -142,6 +142,10 @@ const Developer = () => {
             setPublisher(response.data);
         });
 
+        Axios.get(`http://localhost:3001/developers/count?id=${authState.developer_id}`).then((response) => {
+            setDev(response.data);
+        });
+
         Axios.get(`http://localhost:3001/dlc/developer?id=${authState.developer_id}`).then((response) => {
             setAddOnsList(response.data);
         }); 
@@ -168,10 +172,10 @@ const Developer = () => {
                         <h4> Status:  {authState.developer_status}</h4>
                         <h4> Publisher: {publisher}</h4>
                         <hr></hr>
-                        <h4> Total games: </h4>
-                        <h4> Games in developed state: </h4>
-                        <h4> Games in published state: </h4>
-                        <h4> Games in store: </h4>
+                        <h4> Total games: {dev.total_g} </h4> 
+                        <h4> Games in developed state: {dev.total_dg} </h4> 
+                        <h4> Games in published state: {dev.total_pg} </h4>
+                        <h4> Games in store: {dev.total_sg} </h4>
                         <br></br>
 
                         

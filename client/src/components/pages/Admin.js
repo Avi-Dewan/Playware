@@ -23,8 +23,40 @@ const Admin= () => {
     const [Price, setPrice] = useState();
     const [dealsName, setDealsName] = useState();
     const [cut, setCut] = useState();
+    const [endDate, setEndDate] = useState();
 
     let navigate = useNavigate();
+
+     // Redeem Code Generator-----
+     const sho="Empty";
+     const length1=10;
+     const [vari, setVari] = useState(sho);
+     const [value, setValue] = useState();
+      const Generate=(length)=>{
+          var result           = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * 
+   charactersLength));
+     }
+     setVari(result); 
+        };
+  
+        const Redeem=()=>{
+                    
+          Axios.post('http://localhost:3001/redeems',{
+              wallet_value:value,
+              redeem :vari
+          }).then((response) => {
+              if(!response.data.error)
+                  toast.success("Redeem Code Added");
+          });
+  
+          setVari(sho);
+      
+        };
+// -------------  
     
 
     
@@ -69,7 +101,8 @@ const Admin= () => {
                   
         Axios.post('http://localhost:3001/deals',{
             name:dealsName, 
-            cut:cut
+            cut:cut,
+            endDate: endDate
         }).then((response) => {
             if(!response.data.error)
                 toast.success("Deal Added");
@@ -200,54 +233,70 @@ const Admin= () => {
 
     return (
         <div className="container">
-            <div className="py-4">
+        <div className="py-4">
 
-                <div className=" row">
 
-                    <div className="col-lg-1"></div>
 
-                    <div className="col-lg-11 rounded p-3 p-3">
 
-                        <div className="row mb-3">
-                                <div className="col-lg-6 hover-container-b bg-white border shadow rounded p-3 mx-4 " > <img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" />
-                                
-                                </div> 
-                                <div className="col-lg-3"> 
-                                    <div className="row border hover-container bg-white shadow rounded p-3 mb-3" ><img className="container-fluid"  src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div>
-                                    <div className="row border hover-container bg-white shadow rounded p-3 " ><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div>   
-                                </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-lg-3 mx-3">
-                                <div className="row">
-                                    <div className="col border hover-container bg-white shadow rounded p-3 mx-2">   
-                                    <img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" />   
-                                    </div>
-                                    <div className="col "> 
-                                        <div className="row mb-2 border hover-container bg-white shadow rounded p-3 mb-3"><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /> </div> 
-                                        <div className="row border hover-container bg-white shadow rounded p-3"><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /> </div> 
-                                    </div>  
-                                </div>
-                            </div>
-                        <div className="col-lg-3 border hover-container bg-white shadow rounded p-3 mx-1"><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div> 
-                            <div className="col-lg-3  border hover-container bg-white shadow rounded p-3 mx-1"><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div>  
-                        </div>
-                    </div>
-                 
+        <div className="col-lg-6 container-fluid bg-white border shadow rounded p-3">
+                <div className="row border shadow rounded p-3">
+                    <div className="col-lg-8"><h4 >Rideem Code:<b> {vari}</b></h4></div>
+                    <div className="col-lg-4"><input className="border-5  rounded" type="integer" id="updateInput" placeholder="0" onChange={(e)=>{setValue(e.target.value)}}></input></div>
                 </div>
+                <div className='btn'> <button type="submit" onClick={()=> {Generate(length1);}}>Generate</button></div>
+                <div className='btn'> <button  type="submit" onClick={()=> {Redeem();}}>Active This Redeem</button></div>
+        </div>
+
+
+
+
+            <div className=" row">
+
+                <div className="col-lg-1"></div>
+
+                <div className="col-lg-11 rounded p-3 p-3">
+
+
+                    
+
+                    <div className="row mb-3">
+                            <div className="col-lg-6 hover-container-b bg-white border shadow rounded p-3 mx-4 " onClick={() => { navigate(`/Home_Select/${1}`);}}> <img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" />
+                            
+                            </div> 
+                            <div className="col-lg-3"> 
+                                <div className="row border hover-container bg-white shadow rounded p-3 mb-3"  onClick={() => { navigate(`/Home_Select/${2}`);}}><img className="container-fluid"  src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div>
+                                <div className="row border hover-container bg-white shadow rounded p-3 " onClick={() => { navigate(`/Home_Select/${3}`);}}><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div>   
+                            </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-lg-3 mx-3">
+                            <div className="row">
+                                <div className="col border hover-container bg-white shadow rounded p-3 mx-2">   
+                                <img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" />   
+                                </div>
+                                <div className="col "> 
+                                    <div className="row mb-2 border hover-container bg-white shadow rounded p-3 mb-3"><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /> </div> 
+                                    <div className="row border hover-container bg-white shadow rounded p-3"><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /> </div> 
+                                </div>  
+                            </div>
+                        </div>
+                    <div className="col-lg-3 border hover-container bg-white shadow rounded p-3 mx-1" onClick={() => { navigate(`/Home_Select/${4}`);}}><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div> 
+                        <div className="col-lg-3  border hover-container bg-white shadow rounded p-3 mx-1" onClick={() => { navigate(`/Home_Select/${5}`);}}><img className="container-fluid" src="https://i.ibb.co/88Vw6Ct/valorant.jpg"  border="0" /></div>  
+                    </div>
+                </div>
+             
+            </div>
 
 
 
 
 
-                <br></br>
-                <br></br>
-                <hr></hr>
-                <br></br>
-                <br></br>
-
-
+            <br></br>
+            <br></br>
+            <hr></hr>
+            <br></br>
+            <br></br>
 
                  <div className="row mb-4">
 
@@ -665,9 +714,9 @@ const Admin= () => {
                                                                 <br></br>
                                                                 <b> <i> Name: {subscription.name} </i></b>
                                                                 <br></br>
-                                                                <b>Number of Games: </b> {subscription.number}
+                                                                <b>Number of Games: </b> {subscription.total_games}
                                                                 <br></br>
-                                                                <b>Monthly Payment: </b> {subscription.price}
+                                                                <b>Monthly Payment: </b> {subscription.monthly_payment} $
                                                                 <br></br>
                                                                 
                                                             </p>
@@ -728,6 +777,13 @@ const Admin= () => {
                             setCut(event.target.value);
                             }}></input>
                             <label for="floatingInput">Cut</label> 
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={(event) => {
+                            setEndDate(event.target.value);
+                            }}></input>
+                            <label for="floatingInput">End Date</label> 
                         </div>
 
 

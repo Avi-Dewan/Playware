@@ -30,7 +30,7 @@ router.get("/:id", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.send(result);
+      res.send(result[0]);
     }
   });
 });
@@ -86,11 +86,11 @@ router.post("/login", (req, res) => {
                 //  console.log(user);
               
                   const accessToken = sign(
-                    {  user_id: user.user_id, user_name: user.name },
+                    {  user_id: user.user_id, user_name: user.name , user_wallet: user.wallet},
                     "importantsecret"
                   );
               
-                  res.json({token: accessToken, user_name: user.name, user_id: user.user_id});
+                  res.json({token: accessToken, user_name: user.name, user_id: user.user_id, user_wallet: user.wallet});
                 });
              }
         }

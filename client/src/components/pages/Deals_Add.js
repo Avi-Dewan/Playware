@@ -60,6 +60,7 @@ const Deals_Add = () => {
             <div>
                 <h1 align="center"> <b> {deal.name} </b>   </h1>
                 <h2 align="center"> <b>Discount: </b> {deal.cut} %</h2>
+                <h2 align="center"> Deal ends {moment(deal.end_date, "YYYYMMDD").fromNow() }</h2>
             </div>
 
                 <br></br>

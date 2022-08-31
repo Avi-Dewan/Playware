@@ -7,12 +7,12 @@ const router = express.Router();
 
 router.post("/", (req, res)=> {
 
-    const {name, cut} = req.body;
+    const {name, cut, endDate} = req.body;
   
     // console.log(req.query);
   
     db.query(
-        "INSERT into deals(name, cut) VALUES(?, ?)",[name, cut],
+        "INSERT into deals(name, cut, end_date) VALUES(?, ?, ?)",[name, cut, endDate],
         (err, result) => {
           if (err) {
             console.log(err);

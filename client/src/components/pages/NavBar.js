@@ -17,6 +17,7 @@ const NavBar = () => {
     setAuthState({
       user_name: "",
       user_id:  null,
+      user_wallet: null,
       user_is_logged: false,
 
       developer_name: "",
@@ -44,6 +45,7 @@ const NavBar = () => {
     setAuthState({
       user_name: "",
       user_id:  null,
+      user_wallet: null,
       user_is_logged: false,
 
       developer_name: "",
@@ -71,6 +73,7 @@ const NavBar = () => {
     setAuthState({
       user_name: "",
       user_id:  null,
+      user_wallet: null,
       user_is_logged: false,
 
       developer_name: "",
@@ -156,13 +159,15 @@ const NavBar = () => {
                       &&  <>
 
                             <li className="nav-item "  >
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={userLogout}> Profile </button>
+                              <Link className="btn btn-outline-secondary" to="/User">Profile</Link>
                             </li>
 
                             <li className="nav-item "  >
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={userLogout}> Wish List </button>
+                              <Link className="btn btn-outline-secondary" to="/Wishlist">Wishlist</Link>
                             </li>
-                      
+                            <li className="nav-item "  >
+                              <Link className="btn btn-outline-secondary" to="/Types">Types</Link>
+                            </li>
                             <li className="nav-item "  >
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={userLogout}> Log Out  <i> ( {authState.user_name} ) </i></button>
                             </li>
@@ -198,11 +203,7 @@ const NavBar = () => {
                   
                 </ul>
 
-                <form class="form-inline">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                
+               
                 
                   
       

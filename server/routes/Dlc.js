@@ -26,7 +26,7 @@ router.post("/", (req, res) => {
             // if(game.status != "Stored") res.send("Game has to be released/stored before adding Add Ons");
   
             db.query(
-              "INSERT INTO dlc(name, price, game_name) VALUES(?, ?, ?, ?)", [dlc_name , price, game.game_name],
+              "INSERT INTO dlc(name, price, game_name) VALUES(?, ?, ?)", [dlc_name , price, game_name],
               (err, result) => {
                 if (err) {
                   console.log(err);
@@ -77,6 +77,7 @@ router.get("/game", (req, res)=> {
         }
       );
 });
+
 
 router.delete("/", (req, res)=> {
 

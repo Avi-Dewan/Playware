@@ -67,12 +67,11 @@ const Sub_Add = () => {
 
             <div>
                 <h1 align="center"> <b> {subscription.name} </b>   </h1>
-                <h2 align="center"> <b>Subscription price: </b> {subscription.price} $</h2>
+                <h2 align="center"> <b>Monthly payment: </b> {subscription.monthly_payment} $</h2>
             </div>
 
                 <br></br>
                 <br></br>
-                <hr></hr>
                 <hr></hr>
                 <br></br>
                 <br></br>
@@ -199,8 +198,8 @@ const Sub_Add = () => {
                                     <br></br>
 
                                     {/* <input type="integer" id="updateInput" onChange={(e)=>{setArrivalDate(e.target.value)}}></input> */}
-                                   <b> Delist Date: </b> <input type="integer" id="updateInput" placeholder='  2022/12/31' onChange={(e)=>{setDelistDate(e.target.value)}}></input>
-                            
+                                   <b> Delist Date   : </b> <input type="date" id="updateInput"  onChange={(e)=>{setDelistDate(e.target.value)}}></input>
+                                    
                                     <div className='btn'>
                                         <button onClick={()=>{enlist(game.game_id)}}>
                                              <b> Add To Subscription </b>  

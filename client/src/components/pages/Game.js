@@ -1,21 +1,42 @@
 import Axios from 'axios';
 import moment from 'moment';
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { AuthContext } from '../../helpers/AuthContext';
 import './Card.css';
 
 const Game = () => {
-
+    let {id} = useParams();
+    let navigate = useNavigate();
 
     const [gamesList, setGameList] = useState([]);
+    const {authState} = useContext(AuthContext);
    
 
     useEffect(() => {
-        Axios.get(`http://localhost:3001/games/`).then((response) => {
+
+        Axios.get(`http://localhost:3001/games/types/${id}`).then((response) => {
             setGameList(response.data);
         });
 
     }, []);
 
+    const Wishlist = (game_id) => {
+       
+
+        Axios.post("http://localhost:3001/games/addWishlist", {
+    
+                game_id: game_id,
+                user_id: authState.user_id,
+        
+            }).then((response) => {
+                if(!response.data.error)
+                    toast.success(response.data);
+                else 
+                    toast.error("Already added to wishlist")
+            });
+    };
 
 
 
@@ -62,8 +83,6 @@ const Game = () => {
                                                 <b>Price : </b> {game.price} $
                                                 <br></br>
                                                 <b>Total sales : </b> {game.total_sales}
-                                                <br></br>
-                                                <b>wishlisted : </b> {game.wishlist}
                                             </p>
                                             
                                         </div>
@@ -73,18 +92,19 @@ const Game = () => {
                                     <br></br>
                             
                                     <div className='btn'>
-                                        <button>
-                                            <a href='/Game'>
+                                        <button onClick={() => { navigate(`/Buy/${game.game_id}`);}}>
+                                            <b>
                                                 Buy
-                                            </a>
+                                            </b>
                                         </button>
                                         
                                     </div>
                                     <div className='btn'>
-                                        <button>
-                                            <a href='/Game'>
+                                        <button onClick={ () => 
+                                                        Wishlist(game.game_id)} >  
+                                            <b>
                                             (+) Add to wishlist
-                                            </a>
+                                            </b>
                                         </button>
                                         
                                     </div>

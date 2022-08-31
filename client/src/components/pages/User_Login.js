@@ -34,7 +34,9 @@ const User_Login = () => {
                 setAuthState({ 
                     user_name: res.data.user_name, 
                     user_id: res.data.user_id , 
+                    user_wallet: res.data.user_wallet,
                     user_is_logged: true,
+                    
 
                     developer_name: "",
                     developer_id: null,
@@ -51,7 +53,7 @@ const User_Login = () => {
 
                 setTimeout(()=> {
                     navigate('/Home');
-                    }, 2000);
+                    }, 1000);
             }
       });
     };

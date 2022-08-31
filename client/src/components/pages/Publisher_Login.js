@@ -50,7 +50,7 @@ const Publisher_Login = () => {
 
                     setTimeout(()=> {
                         navigate('/Publisher');
-                        }, 2000);
+                        }, 1000);
                 }
       });
     };

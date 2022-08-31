@@ -20,6 +20,20 @@ router.get("/", (req, res)=> {
     );
 });
 
+router.get("/count", (req, res)=> {
+  const {id} = req.query;
+  db.query(
+      "CALL dev_counts(?) ", id,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result[0][0]);
+        }
+      }
+    );
+});
+
 router.get("/auth",validateToken, (req, res)=> {
   res.send(req.developer);
 });

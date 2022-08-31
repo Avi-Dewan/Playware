@@ -142,14 +142,16 @@ const Publisher= () => {
                         <hr></hr>
                         
                         <h4> <b>  </b></h4>
+                        <br></br>
+                    <br></br>
                         <h4> Status:  {authState.publisher_status}</h4>
-                        <h4> Total developers: </h4>
-                        <hr></hr>
-                        <h4> Total games: </h4>
+                        {/* <h4> Total developers: </h4> */}
+                        {/* <hr></hr> */}
+                        {/* <h4> Total games: </h4>
                         <h4> Games in store: </h4>
                         <h4> Games requested to publish: </h4>
                         <h4> Games rejected by admin </h4>
-                        <br></br>
+                        <br></br> */}
 
                         
 

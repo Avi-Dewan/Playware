@@ -5,39 +5,40 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 import './Card.css';
 
-
-const Subscription = () => {
+const Home_Select = () => {
 
     let {id} = useParams();
-    let navigate = useNavigate();
+  
 
-
-    const [subscription, setSubscription] = useState({});
     const [gamesList, setGameList] = useState([]);
 
+    let navigate = useNavigate();
+   
 
     useEffect(() => {
-
-        Axios.get(`http://localhost:3001/subscriptions/${id}`).then((response) => {
-            setSubscription(response.data);
-        });
-
-        Axios.get(`http://localhost:3001/subscriptions/subscribed/${id}`).then((response) => {
+        Axios.get(`http://localhost:3001/games/yourOnes?who=landing&id=0`).then((response) => {
             setGameList(response.data);
         });
 
     }, []);
 
-    const Wishlist = (game_id) => {
+    const Select= (game_id) => {
+       
 
-
-        Axios.put("http://localhost:3001/games/wishlist", {
-
+        Axios.post("http://localhost:3001/games/Home_Select", {
+    
                 game_id: game_id,
-
+                pos :id // this id is sent to the backend to let them for which position this game is being selected
+        
             }).then((response) => {
-                if(response.data.success)
-                    toast.success("Successfully published the game");
+                if(response.data.success) {
+                    toast.success("Successfully selected the game");
+
+                    setTimeout(()=> {
+                        navigate('/Admin');
+                        }, 1000);
+                }
+                    
             });
     };
 
@@ -46,78 +47,80 @@ const Subscription = () => {
     return (
 
         <div className="container">
-            <br></br>
-            <br></br>
-
-            <div>
-                <h1 align="center"> <b> {subscription.name} </b>   </h1>
-                <h2 align="center"> <b>Monthly payment: </b> {subscription.monthly_payment} $</h2>
-                <h2 align="center"> <b>Total Games: </b> {subscription.total_games} </h2>
-            </div>
-
-
+              
                 <br></br>
                 <br></br>
                 <hr></hr>
                 <br></br>
+                <br></br>
+
+          
+                <h1 align="center">Select Games for Position {id}</h1>
+                <hr></hr>
+                <br></br>
+
                 
 
-
-                <h1 align="center">   Games under this subscription </h1>
-                <br></br>
-                <hr></hr>
-                <br></br>
-
-
-
-
+    
                 <div className='wrapper'>
                     {   
                         gamesList.map((game, key)=> {
-
+                            
                             return(
                                 <div className = 'card-container' key={key}>
                                     <div className='image-container' >
-
+                                        
                                     <img src={game.img_src} alt={game.name} height="250px" width="290px" border="0" />
                                     </div>
-
+                            
                                     <div className='=card-content'>
                                         <div className='card-title'>
                                             <h3>{game.name}</h3>
                                         </div>
-
+                            
                                         <div className='card-body'>
                                             <p>
                                                 <b> <i> Genre: {game.genre} </i></b>
                                                 <br></br>
                                                 <b>Release date: </b> {moment(game.release_date).format("L")}
                                                 <br></br>
+                                                <b>Price : </b> {game.price} $
+                                                <br></br>
                                                 <b>Total sales : </b> {game.total_sales}
                                             </p>
-
+                                            
                                         </div>
-
+                            
                                     </div>
 
                                     <br></br>
-
+                            
+                                    <div className='btn'>
+                                        <button onClick={ () => 
+                                                        Select(game.game_id)} >  
+                                            <b>
+                                            Select
+                                            </b>
+                                        </button>
+                                        
+                                    </div>
+                                    
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
                                 </div>
 
-
+                               
                             );
                         })
                     }
                 </div>
-                <br></br>
-                <br></br>
-                <hr></hr>
 
-
+           
         </div>
-
+        
 
     );
 };
 
-export default Subscription;
+export default Home_Select;
